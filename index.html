@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iteration prior knowledge check</title>
+
+<link rel="icon" type="image/png" href="favicon.png">
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(270deg, #f2f1e8, #f9f9fa, #e8d227);
+    background-size: 400% 400%;
+    animation: bgMove 12s ease infinite;
+    color: #232323;
+}
+
+@keyframes bgMove {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+.container {
+    max-width: 700px;
+    margin: 100px auto;
+    padding: 20px;
+}
+
+.card {
+    display: none;
+    background-color: #77a766;
+    color: #f9f9fa;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+.active { display: block; }
+
+.question {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.options label {
+    display: block;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: rgba(255,255,255,0.1);
+}
+
+.correct { background-color: #318ec3 !important; }
+.wrong { background-color: #724b9e !important; }
+
+.feedback {
+    margin-top: 12px;
+    font-size: 16px;
+}
+
+button {
+    margin-top: 15px;
+    background-color: #e8d227;
+    color: #232323;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
+.logo img { height: 40px; }
+
+footer {
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    color: #232323;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+</style>
+</head>
+
+<body>
+
+<div class="logo">
+    <img src="LOGO.png">
+</div>
+
+<div class="container">
+
+<!-- Q1 -->
+<div class="card active" id="q1">
+    <div class="question">
+        What does it mean to repeat a set of steps in a process?
+    </div>
+
+    <div class="options">
+        <label onclick="check(this,'q1','wrong')">Skipping steps</label>
+        <label onclick="check(this,'q1','wrong')">Performing the steps only once</label>
+        <label onclick="check(this,'q1','correct')">Performing the same steps again and again</label>
+        <label onclick="check(this,'q1','wrong')">Changing the steps each time</label>
+    </div>
+
+    <div class="feedback" id="fb1"></div>
+
+    <div class="nav">
+        <div></div>
+        <button onclick="next('q1','q2')">Next</button>
+    </div>
+</div>
+
+<!-- Q2 -->
+<div class="card" id="q2">
+    <div class="question">
+        Which pattern is followed in the sequence 1, 2, 3, 4, 5?
+    </div>
+
+    <div class="options">
+        <label onclick="check(this,'q2','wrong')">Numbers decrease each time</label>
+        <label onclick="check(this,'q2','correct')">Numbers increase by 1 each time</label>
+        <label onclick="check(this,'q2','wrong')">Numbers increase by 2 each time</label>
+        <label onclick="check(this,'q2','wrong')">Numbers repeat randomly</label>
+    </div>
+
+    <div class="feedback" id="fb2"></div>
+
+    <div class="nav">
+        <button onclick="next('q2','q1')">Back</button>
+        <button onclick="showResult()">Finish</button>
+    </div>
+</div>
+
+<!-- Result -->
+<div class="card" id="result">
+    <div class="question" id="scoreText"></div>
+</div>
+
+</div>
+
+<footer>
+©CuriousEd.ai
+</footer>
+
+<script>
+let score = 0;
+let correctAnswered = {};
+
+function check(element, qid, type) {
+
+    if(correctAnswered[qid]) return;
+
+    let parent = element.parentElement;
+    let labels = parent.querySelectorAll("label");
+
+    labels.forEach(l => l.classList.remove("wrong"));
+
+    let feedbackText = "";
+
+    if(type === "correct") {
+        element.classList.add("correct");
+        correctAnswered[qid] = true;
+        score++;
+
+        if(qid === "q1") {
+            feedbackText = "Correct. Repetition means performing the same steps again and again.";
+        }
+        if(qid === "q2") {
+            feedbackText = "Correct. The numbers increase by 1 each time.";
+        }
+
+        labels.forEach(l => l.onclick = null);
+
+    } else {
+        element.classList.add("wrong");
+
+        if(qid === "q1") {
+            feedbackText = "Incorrect. Try again. Repetition does not skip or change steps.";
+        }
+        if(qid === "q2") {
+            feedbackText = "Incorrect. Try again. Look at how the numbers change step by step.";
+        }
+    }
+
+    document.getElementById("fb1").innerText = (qid === "q1") ? feedbackText : document.getElementById("fb1").innerText;
+    document.getElementById("fb2").innerText = (qid === "q2") ? feedbackText : document.getElementById("fb2").innerText;
+}
+
+function next(current, next) {
+    document.getElementById(current).classList.remove("active");
+    document.getElementById(next).classList.add("active");
+}
+
+function showResult() {
+    document.getElementById("q2").classList.remove("active");
+    document.getElementById("result").classList.add("active");
+    document.getElementById("scoreText").innerText = "Score: " + score + " out of 2";
+}
+</script>
+
+</body>
+</html>
