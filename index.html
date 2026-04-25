@@ -8,13 +8,16 @@
 <link rel="icon" type="image/png" href="favicon.png">
 
 <style>
-body {
+html, body {
     margin: 0;
+    padding: 0;
+    height: 100%;
     font-family: Arial, sans-serif;
     background: linear-gradient(270deg, #f2f1e8, #f9f9fa, #e8d227);
     background-size: 400% 400%;
     animation: bgMove 12s ease infinite;
     color: #232323;
+    font-size: clamp(14px, 1.2vw, 22px);
 }
 
 @keyframes bgMove {
@@ -23,55 +26,61 @@ body {
     100% {background-position: 0% 50%;}
 }
 
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .container {
     width: 90%;
-    max-width: 1200px;
-    margin: 5vh auto;
-    padding: 2vw;
+    max-width: 1000px;
 }
 
 .card {
     display: none;
     background-color: #77a766;
     color: #f9f9fa;
-    border-radius: 12px;
-    padding: 25px;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.2);
 }
 
 .active { display: block; }
 
 .question {
-    font-size: 2.2vw;
-    margin-bottom: 15px;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
 }
 
 .options label {
     display: block;
-   font-size: 2vw;
-    padding: 1.5vw;
-    margin: 8px 0;
-    border-radius: 8px;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    border-radius: 0.6rem;
     cursor: pointer;
     background-color: rgba(255,255,255,0.1);
+    font-size: 1.3rem;
 }
 
 .correct { background-color: #318ec3 !important; }
 .wrong { background-color: #724b9e !important; }
 
 .feedback {
-    margin-top: 12px;
-    font-size: 16px;
+    margin-top: 0.8rem;
+    font-size: 1.2rem;
 }
 
 button {
-    margin-top: 15px;
-    font-size: 1.8vw;
-    padding: 1vw 2vw;
+    margin-top: 1rem;
     background-color: #e8d227;
     color: #232323;
     border: none;
-    border-radius: 8px;
+    padding: 0.6rem 1.5rem;
+    border-radius: 0.5rem;
     cursor: pointer;
+    font-size: 1.2rem;
 }
 
 .nav {
@@ -81,20 +90,21 @@ button {
 
 .logo {
     position: absolute;
-    top: 15px;
-    right: 20px;
+    top: 1rem;
+    right: 1rem;
 }
 
-.logo img { height: 4vw; }
+.logo img {
+    height: clamp(30px, 4vw, 60px);
+}
 
 footer {
-    text-align: center;
-    padding: 10px;
-    font-size: 14px;
-    color: #232323;
     position: fixed;
     bottom: 0;
     width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 0.5rem;
 }
 </style>
 </head>
@@ -105,9 +115,10 @@ footer {
     <img src="LOGO.png">
 </div>
 
+<div class="wrapper">
 <div class="container">
 
-<!-- Q1 -->
+<!-- Question 1 -->
 <div class="card active" id="q1">
     <div class="question">
         What does it mean to repeat a set of steps in a process?
@@ -128,7 +139,7 @@ footer {
     </div>
 </div>
 
-<!-- Q2 -->
+<!-- Question 2 -->
 <div class="card" id="q2">
     <div class="question">
         Which pattern is followed in the sequence 1, 2, 3, 4, 5?
@@ -154,6 +165,7 @@ footer {
     <div class="question" id="scoreText"></div>
 </div>
 
+</div>
 </div>
 
 <footer>
